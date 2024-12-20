@@ -6,19 +6,23 @@
 
     <resultMap id="BaseResultMap" type="com.yupi.springbootinit.model.entity.Chart">
             <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
             <result property="goal" column="goal" jdbcType="VARCHAR"/>
             <result property="chartData" column="chartData" jdbcType="VARCHAR"/>
             <result property="chartType" column="chartType" jdbcType="VARCHAR"/>
+            <result property="userId" column="userId" jdbcType="BIGINT"/>
             <result property="genChart" column="genChart" jdbcType="VARCHAR"/>
             <result property="genResult" column="genResult" jdbcType="VARCHAR"/>
             <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
             <result property="isDelete" column="isDelete" jdbcType="TINYINT"/>
+            <result property="column_name" column="column_name" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,goal,chartData,
-        chartType,genChart,genResult,
-        createTime,updateTime,isDelete
+        id,`name`,goal,chartData,
+        chartType,userId,genChart,
+        genResult,createTime,updateTime,
+        isDelete,column_name
     </sql>
 </mapper>

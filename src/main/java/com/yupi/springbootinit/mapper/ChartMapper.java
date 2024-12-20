@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 /**
 * @author leeyou
 * @description 针对表【chart(图表信息表)】的数据库操作Mapper
-* @createDate 2024-12-18 20:37:14
+* @createDate 2024-12-18 21:08:01
 * @Entity com.yupi.springbootinit.model.entity.Chart
 */
 public interface ChartMapper extends BaseMapper<Chart> {

@@ -101,3 +101,10 @@ knife4j:
         api-rule: package
         api-rule-resources:
           - com.yupi.springbootinit.controller
+
+## 讯飞 AI 配置
+xun-fei:
+  client:
+    appId: f647acaf
+    apiSecret: NzdlOGFlYmRkYWQwZmUyZDRmNDA3ZWU3
+    apiKey: c3affc79866ad410dd5dc053d959a741

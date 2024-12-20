@@ -1,30 +1,30 @@
-package com.yupi.springbootinit.model.entity;
+package com.yupi.springbootinit.model.dto.chart;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.util.Date;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+
 /**
- * 图表信息表
- * @TableName chart
+ * 更新请求
+ *
+ * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
+ * @from <a href="https://yupi.icu">编程导航知识星球</a>
  */
-@TableName(value ="chart")
 @Data
-public class Chart implements Serializable {
+public class ChartUpdateRequest implements Serializable {
+
     /**
      * id
      */
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
-    /**
-     * 图表名称
-     */
-    private String name;
     /**
      * 分析目标
      */
@@ -41,10 +41,9 @@ public class Chart implements Serializable {
     private String chartType;
 
     /**
-     * 用户id
+     * 图表名称
      */
-    private Long userId;
-
+    private String name;
     /**
      * 生成的图表数据
      */
@@ -68,12 +67,8 @@ public class Chart implements Serializable {
     /**
      * 是否删除
      */
+    @TableLogic
     private Integer isDelete;
-
-    /**
-     * 
-     */
-    private Integer column_name;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
