@@ -12,6 +12,7 @@ import com.yupi.springbootinit.exception.BusinessException;
 import com.yupi.springbootinit.exception.ThrowUtils;
 import com.yupi.springbootinit.manager.AIManger;
 import com.yupi.springbootinit.manager.CosManager;
+import com.yupi.springbootinit.manager.RedisLimiter;
 import com.yupi.springbootinit.model.dto.chart.*;
 import com.yupi.springbootinit.model.entity.Chart;
 import com.yupi.springbootinit.model.entity.User;
@@ -48,7 +49,8 @@ public class ChartController {
     @Resource
     private UserService userService;
 
-
+    @Resource
+    private RedisLimiter redisLimiter;
     @Resource
     private AIManger aiManger;
     @Resource
@@ -65,16 +67,24 @@ public class ChartController {
     @PostMapping("/upload")
     public BaseResponse<BIResponse> genChartByAi(@RequestPart("file") MultipartFile multipartFile,
                                              GenChartByAiRequest genChartByAiRequest, HttpServletRequest request) throws Exception {
+
         User loginUser = userService.getLoginUser(request);
         String name = genChartByAiRequest.getName();
         String goal = genChartByAiRequest.getGoal();
-        String chartData = genChartByAiRequest.getChartData();
+
         String chartType = genChartByAiRequest.getChartType();
         ThrowUtils.throwIf(goal == null || goal.length() > 128, ErrorCode.PARAMS_ERROR);
-
         ThrowUtils.throwIf(chartType == null || chartType.length() > 128, ErrorCode.PARAMS_ERROR);
         ThrowUtils.throwIf(name == null || name.length() > 128, ErrorCode.PARAMS_ERROR);
-
+        //校验文件
+        long size = multipartFile.getSize();
+        String originalFilename = multipartFile.getOriginalFilename();
+        final long ONE_M = 1024 * 1024L;
+        ThrowUtils.throwIf(size > ONE_M, ErrorCode.PARAMS_ERROR, "文件大小不能超过 1M");
+        //校验文件后缀
+        if (!Arrays.asList("xlsx", "xls").contains(FileUtil.getSuffix(originalFilename))) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "文件类型错误");
+        }
         //用户输入
         StringBuilder userinput = new StringBuilder();
         userinput.append("分析需求：").append("\n");
@@ -86,6 +96,8 @@ public class ChartController {
         //压缩后的数据
         String csvData = excelToCsv(multipartFile);
         userinput.append("原始数据：").append("\n").append(csvData).append("\n");
+        //进行用户限流
+        redisLimiter.doRateLimit("genChartByAi_" + loginUser.getId());
         String result = aiManger.sendMsgToXingHuo(true, userinput.toString());
         String[] splits = result.split("'【【【【【'");
         if(splits.length < 3){

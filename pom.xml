@@ -24,6 +24,12 @@
             <artifactId>spring-boot-starter-freemarker</artifactId>
         </dependency>
         <!--修改version为最新稳定版-->
+        <!-- https://mvnrepository.com/artifact/org.redisson/redisson -->
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson</artifactId>
+            <version>3.23.3</version>
+        </dependency>
 
         <dependency>
             <groupId>io.github.briqt</groupId>

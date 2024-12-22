@@ -25,4 +25,7 @@
         genResult,createTime,updateTime,
         isDelete,column_name
     </sql>
+    <select id="queryChartData" parameterType="long" resultType="map">
+        select * from chart_#{chartId}
+    </select>
 </mapper>
