@@ -56,6 +56,14 @@ public class Chart implements Serializable {
     private String genResult;
 
     /**
+     * 图表任务状态
+     */
+    private String status;
+    /**
+     * 提交图表信息
+     */
+    private String execMessage;
+    /**
      * 创建时间
      */
     private Date createTime;

@@ -22,7 +22,7 @@
     <sql id="Base_Column_List">
         id,`name`,goal,chartData,
         chartType,userId,genChart,
-        genResult,createTime,updateTime,
+        genResult,`status`,`execMessage`,createTime,updateTime,
         isDelete,column_name
     </sql>
     <select id="queryChartData" parameterType="long" resultType="map">
